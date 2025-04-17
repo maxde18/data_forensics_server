@@ -32,7 +32,6 @@ services:
     depends_on:
       - sqlserver
 
-services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     command: tunnel run --token ${CLOUDFLARE_TUNNEL_TOKEN}
