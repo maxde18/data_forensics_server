@@ -36,8 +36,8 @@ services:
     image: cloudflare/cloudflared:latest
     volumes:
       - ./secrets/secrets.txt:/run/secrets/cloudflared_token:ro
-    entrypoint: >
-      sh -c "cloudflared tunnel run --token $(cat /run/secrets/cloudflared_token)"
+    entrypoint: cloudflared
+    command: tunnel run --token $(cat ./secrets/secrets.txt)
     restart: unless-stopped
 
 volumes:
