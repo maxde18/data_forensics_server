@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "test "
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  etl:
+    build: ./etl
+    ports:
+      - "8888:8888"  # for Jupyter notebook
+    volumes:
+      - ./etl:/app
+    working_dir: /app
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    command: jupyter notebook --ip=0.0.0.0 --allow-root --NotebookApp.token='' --NotebookApp.password=''
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqlserverdata:
