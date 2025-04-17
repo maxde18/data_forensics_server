@@ -24,5 +24,13 @@ services:
     depends_on:
       - sqlserver
 
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sqlserver
+
 volumes:
   sqlserverdata:
